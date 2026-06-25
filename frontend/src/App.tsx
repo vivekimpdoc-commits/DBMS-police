@@ -153,10 +153,10 @@ function NavLink({ to, icon: Icon, label }: { to: string; icon: any; label: stri
   return (
     <Link to={to}
       className={`flex items-center gap-3 px-4 py-2.5 rounded-2xl font-medium transition-all relative text-sm ${
-        isActive ? 'text-blue-700 bg-blue-50 border border-blue-200' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent'
+        isActive ? 'text-white bg-blue-600/10 border border-blue-500/20' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 border border-transparent'
       }`}>
-      {isActive && <motion.div layoutId="activeNav" className="absolute inset-0 bg-blue-100/50 rounded-2xl" />}
-      <Icon size={16} className={`relative z-10 ${isActive ? 'text-blue-600' : 'group-hover:text-blue-600'}`} />
+      {isActive && <motion.div layoutId="activeNav" className="absolute inset-0 bg-blue-500/5 rounded-2xl" />}
+      <Icon size={16} className={`relative z-10 ${isActive ? 'text-blue-400' : 'group-hover:text-blue-400'}`} />
       <span className="relative z-10 leading-none">{label}</span>
     </Link>
   );
@@ -165,13 +165,13 @@ function NavLink({ to, icon: Icon, label }: { to: string; icon: any; label: stri
 function Sidebar() {
   const { t, lang, toggleLanguage } = useLanguage();
   return (
-    <div className="w-[260px] bg-white/90 backdrop-blur-2xl border-r border-slate-200 h-screen sticky top-0 flex-col hidden md:flex z-50 shrink-0 shadow-[4px_0_24px_-12px_rgba(0,0,0,0.05)]">
+    <div className="w-[260px] bg-slate-950/90 backdrop-blur-2xl border-r border-slate-800/50 h-screen sticky top-0 flex-col hidden md:flex z-50 shrink-0">
       <div className="p-5 flex items-center gap-3">
-        <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30 border border-blue-500/20">
+        <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-700 rounded-xl flex items-center justify-center shadow-lg shadow-blue-900/40 border border-white/10">
           <Shield className="text-white w-5 h-5" />
         </div>
         <div>
-          <h1 className="text-lg font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-emerald-600">VDMS</h1>
+          <h1 className="text-lg font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">VDMS</h1>
           <p className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">UP Police Control</p>
         </div>
       </div>
@@ -181,53 +181,53 @@ function Sidebar() {
         <NavLink to="/vip" icon={Shield} label={t('vipEvents')} />
 
         <div className="pt-3 pb-1 px-4">
-          <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">Duty Management</p>
+          <p className="text-[9px] font-black text-slate-600 uppercase tracking-[0.2em]">Duty Management</p>
         </div>
         <NavLink to="/officers" icon={UserSquare2} label="Officers Registry" />
         <NavLink to="/duty" icon={ClipboardList} label="Duty Assignment" />
         <NavLink to="/deployment" icon={Users} label={t('forceDeployment')} />
 
         <div className="pt-3 pb-1 px-4">
-          <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">Operations</p>
+          <p className="text-[9px] font-black text-slate-600 uppercase tracking-[0.2em]">Operations</p>
         </div>
         <NavLink to="/map" icon={MapPin} label={t('gisMap')} />
         <NavLink to="/incidents" icon={Activity} label={t('incidents')} />
         <NavLink to="/security" icon={ShieldCheck} label={t('security')} />
 
         <div className="pt-3 pb-1 px-4">
-          <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">{t('analyticsHeading')}</p>
+          <p className="text-[9px] font-black text-slate-600 uppercase tracking-[0.2em]">{t('analyticsHeading')}</p>
         </div>
         <NavLink to="/reports" icon={BarChart2} label={t('reports')} />
         <NavLink to="/ai" icon={Brain} label={t('aiFeed')} />
 
         <div className="pt-3 pb-1 px-4">
-          <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">Field</p>
+          <p className="text-[9px] font-black text-slate-600 uppercase tracking-[0.2em]">Field</p>
         </div>
         <Link to="/mobile" target="_blank"
-          className="flex items-center gap-3 px-4 py-2.5 text-emerald-700 hover:text-emerald-800 hover:bg-emerald-100 rounded-2xl font-medium border border-emerald-200 bg-emerald-50 text-sm transition-all">
+          className="flex items-center gap-3 px-4 py-2.5 text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/5 rounded-2xl font-medium border border-emerald-500/15 bg-emerald-500/5 text-sm transition-all">
           <Smartphone size={16} /> {t('officerApp')}
         </Link>
       </nav>
 
-      <div className="p-3 shrink-0 space-y-2 border-t border-slate-200">
+      <div className="p-3 shrink-0 space-y-2 border-t border-slate-800/50">
         <button onClick={toggleLanguage}
-          className="w-full flex items-center justify-between px-4 py-2.5 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 transition-colors">
+          className="w-full flex items-center justify-between px-4 py-2.5 bg-slate-900/50 hover:bg-slate-800 rounded-xl border border-slate-800 transition-colors">
           <div className="flex items-center gap-2">
-            <Languages size={14} className="text-blue-600" />
-            <span className="text-sm font-medium text-slate-700">Language</span>
+            <Languages size={14} className="text-blue-400" />
+            <span className="text-sm font-medium text-slate-300">Language</span>
           </div>
-          <span className="text-[11px] font-black px-2 py-0.5 bg-slate-200 rounded-lg text-slate-700 uppercase">{lang === 'en' ? 'EN' : 'HI'}</span>
+          <span className="text-[11px] font-black px-2 py-0.5 bg-slate-800 rounded-lg text-white uppercase">{lang === 'en' ? 'EN' : 'HI'}</span>
         </button>
 
-        <div className="bg-slate-50 rounded-2xl p-3 border border-slate-200">
+        <div className="bg-slate-900/60 rounded-2xl p-3 border border-slate-800">
           <div className="flex items-center gap-2.5 mb-2.5">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-black text-white text-[11px] shadow-sm">DGP</div>
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-black text-white text-[11px]">DGP</div>
             <div>
-              <p className="text-sm font-bold text-slate-800">Prashant K.</p>
+              <p className="text-sm font-bold text-white">Prashant K.</p>
               <p className="text-[10px] text-slate-500 uppercase tracking-wider">{t('stateControl')}</p>
             </div>
           </div>
-          <Link to="/login" className="w-full py-1.5 bg-white hover:bg-red-50 text-slate-500 hover:text-red-600 rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-2 border border-slate-200 hover:border-red-200">
+          <Link to="/login" className="w-full py-1.5 bg-slate-950 hover:bg-red-500/10 text-slate-400 hover:text-red-400 rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-2 border border-transparent hover:border-red-500/20">
             <LogOut size={12}/> {t('logout')}
           </Link>
         </div>
@@ -239,23 +239,23 @@ function Sidebar() {
 function Header() {
   const { t } = useLanguage();
   return (
-    <header className="h-14 border-b border-slate-200 bg-white/80 backdrop-blur-2xl sticky top-0 z-40 flex items-center justify-between px-6 shrink-0 shadow-[0_4px_24px_-12px_rgba(0,0,0,0.05)]">
+    <header className="h-14 border-b border-slate-800/50 bg-slate-950/70 backdrop-blur-2xl sticky top-0 z-40 flex items-center justify-between px-6 shrink-0">
       <div className="flex items-center gap-4">
-        <button className="md:hidden text-slate-500 hover:text-slate-800"><Menu size={20} /></button>
+        <button className="md:hidden text-slate-400 hover:text-white"><Menu size={20} /></button>
         <div className="relative hidden md:block">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 w-3.5 h-3.5" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-600 w-3.5 h-3.5" />
           <input type="text" placeholder={t('searchPlaceholder')}
-            className="pl-9 pr-4 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-300 w-[300px] transition-all focus:bg-white" />
+            className="pl-9 pr-4 py-1.5 bg-slate-900/50 border border-slate-800 rounded-xl text-sm text-white placeholder-slate-700 focus:outline-none focus:border-blue-500/40 w-[300px] transition-all" />
         </div>
       </div>
       <div className="flex items-center gap-3">
-        <button className="relative p-1.5 text-slate-500 hover:text-slate-800 transition-colors hover:bg-slate-100 rounded-lg">
+        <button className="relative p-1.5 text-slate-500 hover:text-white transition-colors hover:bg-slate-800/50 rounded-lg">
           <Bell size={16} />
           <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-red-500 rounded-full" />
         </button>
-        <div className="h-5 w-px bg-slate-200" />
+        <div className="h-5 w-px bg-slate-800" />
         <div className="text-right hidden sm:block">
-          <p className="text-xs font-bold text-slate-800">{t('commandCenter')}</p>
+          <p className="text-xs font-bold text-white">{t('commandCenter')}</p>
           <p className="text-[10px] font-bold text-emerald-400 flex items-center justify-end gap-1">
             <span className="relative flex w-1.5 h-1.5">
               <span className="absolute inline-flex w-full h-full rounded-full opacity-75 bg-emerald-400 animate-ping" />
@@ -274,9 +274,9 @@ function MainLayout() {
   if (location.pathname === '/mobile') return <OfficerMobileView />;
   if (location.pathname === '/login') return <Login />;
   return (
-    <div className="flex min-h-screen bg-[#F8FAFC] font-sans text-slate-900">
-      <div className="fixed top-[-15%] left-[-8%] w-[45%] h-[45%] bg-blue-100/50 blur-[150px] rounded-full pointer-events-none" />
-      <div className="fixed bottom-[-15%] right-[-8%] w-[40%] h-[40%] bg-emerald-50/50 blur-[130px] rounded-full pointer-events-none" />
+    <div className="flex min-h-screen bg-[#020817] font-sans">
+      <div className="fixed top-[-15%] left-[-8%] w-[45%] h-[45%] bg-blue-900/15 blur-[150px] rounded-full pointer-events-none" />
+      <div className="fixed bottom-[-15%] right-[-8%] w-[40%] h-[40%] bg-indigo-900/10 blur-[130px] rounded-full pointer-events-none" />
       <Sidebar />
       <div className="flex-1 flex flex-col min-w-0 relative z-10">
         <Header />
