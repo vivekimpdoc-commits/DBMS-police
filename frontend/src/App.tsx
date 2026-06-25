@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { Shield, Users, MapPin, Activity, LayoutDashboard, Menu, Search, Bell, Smartphone, ShieldCheck, Brain, BarChart2, LogOut, Languages, ClipboardList, UserSquare2, TrendingUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from './i18n';
