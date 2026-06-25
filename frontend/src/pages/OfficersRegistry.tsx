@@ -100,7 +100,7 @@ function AddOfficerModal({ onClose, onSave }: { onClose: () => void; onSave: (o:
               <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">{f.label}</label>
               <select value={(form as any)[f.key]} onChange={e => setForm({ ...form, [f.key]: e.target.value })}
                 className="w-full px-4 py-3 bg-slate-950/50 border border-slate-700/50 rounded-2xl text-white focus:outline-none focus:border-blue-500 transition-all text-sm appearance-none">
-                {f.options.map(o => <option key={o} value={o}>{o}</option>)}
+                {f.options.map(o => <option key={o} value={o} className="bg-slate-900 text-white">{o}</option>)}
               </select>
             </div>
           ))}
@@ -200,8 +200,8 @@ export default function OfficersRegistry() {
             ))}
             <select value={filterRank} onChange={e => setFilterRank(e.target.value)}
               className="px-3 py-2 bg-slate-800/50 text-slate-400 border border-slate-700/50 rounded-xl text-xs font-bold focus:outline-none hover:border-slate-600 transition-all appearance-none">
-              <option value="All">All Ranks</option>
-              {RANKS.map(r => <option key={r} value={r}>{r}</option>)}
+              <option value="All" className="bg-slate-900 text-white">All Ranks</option>
+              {RANKS.map(r => <option key={r} value={r} className="bg-slate-900 text-white">{r}</option>)}
             </select>
           </div>
         </div>

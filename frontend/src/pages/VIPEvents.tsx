@@ -118,9 +118,9 @@ function AddEventModal({ onClose, onSave }: { onClose: () => void; onSave: (even
                 value={form.threat} onChange={e => setForm({ ...form, threat: e.target.value })}
                 className="w-full px-4 py-3 bg-slate-950/50 border border-slate-700/50 rounded-2xl text-white focus:outline-none focus:border-blue-500 transition-all appearance-none"
               >
-                <option value="High">🔴 High</option>
-                <option value="Medium">🟠 Medium</option>
-                <option value="Low">🟢 Low</option>
+                <option value="High" className="bg-slate-900 text-white">🔴 High</option>
+                <option value="Medium" className="bg-slate-900 text-white">🟠 Medium</option>
+                <option value="Low" className="bg-slate-900 text-white">🟢 Low</option>
               </select>
             </div>
           </div>
@@ -139,10 +139,10 @@ function AddEventModal({ onClose, onSave }: { onClose: () => void; onSave: (even
               value={form.status} onChange={e => setForm({ ...form, status: e.target.value })}
               className="w-full px-4 py-3 bg-slate-950/50 border border-slate-700/50 rounded-2xl text-white focus:outline-none focus:border-blue-500 transition-all appearance-none"
             >
-              <option value="Planning">Planning</option>
-              <option value="ASL Pending">ASL Pending</option>
-              <option value="Deployed">Deployed</option>
-              <option value="Completed">Completed</option>
+              <option value="Planning" className="bg-slate-900 text-white">Planning</option>
+              <option value="ASL Pending" className="bg-slate-900 text-white">ASL Pending</option>
+              <option value="Deployed" className="bg-slate-900 text-white">Deployed</option>
+              <option value="Completed" className="bg-slate-900 text-white">Completed</option>
             </select>
           </div>
 

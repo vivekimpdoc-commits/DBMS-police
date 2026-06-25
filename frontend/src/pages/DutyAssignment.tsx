@@ -117,14 +117,14 @@ function AssignModal({ event, officers, onClose, onSave, onOfficersRefresh }: {
             <select value={form.officerId} onChange={e => setForm({ ...form, officerId: e.target.value })}
               className="w-full px-4 py-3 bg-slate-950/50 border border-slate-700/50 rounded-2xl text-white focus:outline-none focus:border-blue-500 transition-all text-sm appearance-none">
               {allSorted.length === 0 ? (
-                <option value="">— No officers in system —</option>
+                <option value="" className="bg-slate-900 text-white">— No officers in system —</option>
               ) : (
                 <>
                   {available.length > 0 && <optgroup label="✅ Available Officers">
-                    {available.map(o => <option key={o.id} value={o.id}>{o.rank} {o.name} ({o.badgeNo})</option>)}
+                    {available.map(o => <option key={o.id} value={o.id} className="bg-slate-900 text-white">{o.rank} {o.name} ({o.badgeNo})</option>)}
                   </optgroup>}
                   {deployed.length > 0 && <optgroup label="🔶 Deployed Officers (can reassign)">
-                    {deployed.map(o => <option key={o.id} value={o.id}>{o.rank} {o.name} ({o.badgeNo}) — Deployed</option>)}
+                    {deployed.map(o => <option key={o.id} value={o.id} className="bg-slate-900 text-white">{o.rank} {o.name} ({o.badgeNo}) — Deployed</option>)}
                   </optgroup>}
                 </>
               )}
@@ -135,22 +135,24 @@ function AssignModal({ event, officers, onClose, onSave, onOfficersRefresh }: {
               <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Zone / जोन</label>
               <select value={form.zone} onChange={e => setForm({ ...form, zone: e.target.value })}
                 className="w-full px-4 py-3 bg-slate-950/50 border border-slate-700/50 rounded-2xl text-white focus:outline-none focus:border-blue-500 transition-all text-sm appearance-none">
-                {ZONES.map(z => <option key={z} value={z}>{z}</option>)}
+                {ZONES.map(z => <option key={z} value={z} className="bg-slate-900 text-white">{z}</option>)}
               </select>
             </div>
             <div>
               <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Role / भूमिका</label>
               <select value={form.role} onChange={e => setForm({ ...form, role: e.target.value })}
                 className="w-full px-4 py-3 bg-slate-950/50 border border-slate-700/50 rounded-2xl text-white focus:outline-none focus:border-blue-500 transition-all text-sm appearance-none">
-                {ROLES.map(r => <option key={r} value={r}>{r}</option>)}
+                {ROLES.map(r => <option key={r} value={r} className="bg-slate-900 text-white">{r}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Shift / पाली</label>
-              <select value={form.shift} onChange={e => setForm({ ...form, shift: e.target.value })}
-                className="w-full px-4 py-3 bg-slate-950/50 border border-slate-700/50 rounded-2xl text-white focus:outline-none focus:border-blue-500 transition-all text-sm appearance-none">
+              <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Shift / पाली (Custom or select)</label>
+              <input list="shifts-list" value={form.shift} onChange={e => setForm({ ...form, shift: e.target.value })}
+                placeholder="e.g. Morning (6AM-2PM) or 8AM-4PM"
+                className="w-full px-4 py-3 bg-slate-950/50 border border-slate-700/50 rounded-2xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-all text-sm" />
+              <datalist id="shifts-list">
                 {SHIFTS.map(s => <option key={s} value={s}>{s}</option>)}
-              </select>
+              </datalist>
             </div>
             <div>
               <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Sector</label>
