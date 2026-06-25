@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model VIPEvent {
+  id        String   @id @default(cuid())
+  eventId   String   @unique
+  name      String
+  date      String
+  venue     String
+  threat    String
+  status    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  duties    DutyAssignment[]
+}
+
+model Officer {
+  id           String   @id @default(cuid())
+  badgeNo      String   @unique
+  name         String
+  rank         String
+  unit         String
+  district     String
+  phone        String
+  availability String   @default("Available") // Available, On Leave, Deployed
+  speciality   String   @default("General")   // General, Traffic, BDS, IB, QRT
+  createdAt    DateTime @default(now())
+  duties       DutyAssignment[]
+}
+
+model DutyAssignment {
+  id          String   @id @default(cuid())
+  assignId    String   @unique
+  officerId   String
+  officer     Officer  @relation(fields: [officerId], references: [id])
+  eventId     String
+  event       VIPEvent @relation(fields: [eventId], references: [id])
+  zone        String
+  sector      String
+  role        String
+  shift       String   // Morning / Afternoon / Night
+  reportingAt String
+  reportingTo String
+  status      String   @default("Assigned") // Assigned, Confirmed, On Duty, Completed
+  aiGenerated Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
