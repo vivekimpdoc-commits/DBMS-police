@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Brain, UserPlus, Zap, Printer, X, MapPin, Clock, Users, Trash2, RefreshCw, AlertTriangle, RotateCcw } from 'lucide-react';
+import { Brain, UserPlus, Zap, Printer, X, MapPin, Clock, Users, Trash2, RefreshCw, AlertTriangle, RotateCcw, CheckCircle2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { showToast } from '../components/Toast';
 
