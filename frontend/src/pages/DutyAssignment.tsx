@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Brain, UserPlus, Zap, CheckCircle2, Printer, X, Shield, MapPin, Clock, Users, Trash2, RefreshCw } from 'lucide-react';
+import { Brain, UserPlus, Zap, Printer, X, MapPin, Clock, Users, Trash2, RefreshCw, AlertTriangle, RotateCcw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { showToast } from '../components/Toast';
 
@@ -13,31 +13,54 @@ interface DutyAssignment {
 
 const ZONES = ['Zone 1 – Inner Cordon', 'Zone 2 – Outer Cordon', 'Zone 3 – Route A', 'Zone 4 – Reserve'];
 const ROLES = ['Sector Incharge', 'Close Protection', 'Route Mobile', 'Checkpost', 'Beat Officer', 'Traffic', 'Quick Response Team', 'Armed Guard', 'Perimeter'];
-const SHIFTS = ['Morning (6AM-2PM)', 'Afternoon (2PM-10PM)', 'Night (10PM-6AM)'];
+const SHIFTS = ['Morning (6AM–2PM)', 'Afternoon (2PM–10PM)', 'Night (10PM–6AM)'];
 
-function AssignModal({ event, officers, onClose, onSave }: {
-  event: VIPEvent; officers: Officer[]; onClose: () => void; onSave: (d: DutyAssignment) => void;
+function AssignModal({ event, officers, onClose, onSave, onOfficersRefresh }: {
+  event: VIPEvent; officers: Officer[]; onClose: () => void;
+  onSave: (d: DutyAssignment) => void; onOfficersRefresh: () => void;
 }) {
   const available = officers.filter(o => o.availability === 'Available');
-  const [form, setForm] = useState({ officerId: available[0]?.id || '', zone: ZONES[0], sector: 'Sector 1', role: ROLES[0], shift: SHIFTS[0], reportingAt: event.venue, reportingTo: 'Sector Commander' });
+  const deployed  = officers.filter(o => o.availability === 'Deployed');
+  const allSorted = [...available, ...deployed];
+
+  const [form, setForm] = useState({
+    officerId: allSorted[0]?.id || '',
+    zone: ZONES[0], sector: 'Sector 1', role: ROLES[0], shift: SHIFTS[0],
+    reportingAt: event.venue, reportingTo: 'Sector Commander'
+  });
   const [saving, setSaving] = useState(false);
+  const [resetting, setResetting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.officerId) { showToast('error', 'No Officer Selected', 'Please select an officer.'); return; }
+    if (!form.officerId) { showToast('error', 'अधिकारी चुनें', 'कृपया एक अधिकारी select करें।'); return; }
     setSaving(true);
     try {
       const res = await fetch('http://localhost:3000/api/duties', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...form, eventId: event.id })
       });
-      if (!res.ok) throw new Error('Failed');
+      if (!res.ok) { const d = await res.json(); throw new Error(d.error); }
       const data = await res.json();
       onSave(data);
-      showToast('success', 'Duty Assigned!', `${data.officer.name} assigned to ${form.zone}.`);
+      onOfficersRefresh();
+      showToast('success', 'ड्यूटी लगाई गई!', `${data.officer.name} को ${form.zone} में तैनात किया गया।`);
       onClose();
-    } catch { showToast('error', 'Error', 'Could not assign duty.'); }
+    } catch (err: any) { showToast('error', 'Error', err.message || 'Could not assign duty.'); }
     finally { setSaving(false); }
+  };
+
+  const handleResetAll = async () => {
+    if (!confirm('इस event की सभी duties हटा दें? सभी officers Available हो जाएंगे।')) return;
+    setResetting(true);
+    try {
+      const res = await fetch(`http://localhost:3000/api/duties/event/${event.id}`, { method: 'DELETE' });
+      const d = await res.json();
+      onOfficersRefresh();
+      showToast('info', 'Duties Reset', `${d.cleared} duties हटाई गईं। अब सभी officers Available हैं।`);
+      onClose();
+    } catch { showToast('error', 'Error', 'Reset failed.'); }
+    finally { setResetting(false); }
   };
 
   return (
@@ -46,24 +69,65 @@ function AssignModal({ event, officers, onClose, onSave }: {
       <motion.div initial={{ scale: 0.9, y: 24 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 24 }}
         onClick={e => e.stopPropagation()}
         className="bg-slate-900/95 backdrop-blur-2xl border border-white/10 rounded-3xl p-8 w-full max-w-lg shadow-2xl">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-10 h-10 rounded-2xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center">
-            <UserPlus className="text-blue-400" size={20} />
+
+        {/* Header */}
+        <div className="flex items-start justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center">
+              <UserPlus className="text-blue-400" size={20} />
+            </div>
+            <div>
+              <h3 className="text-xl font-black text-white">नई ड्यूटी लगाएं</h3>
+              <p className="text-slate-400 text-xs font-medium">{event.name}</p>
+            </div>
           </div>
-          <div>
-            <h3 className="text-xl font-black text-white">ड्यूटी लगाएं</h3>
-            <p className="text-slate-400 text-xs font-medium">{event.name}</p>
+          <button type="button" onClick={onClose} className="w-8 h-8 rounded-xl bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-white transition-colors">
+            <X size={15} />
+          </button>
+        </div>
+
+        {/* Availability summary */}
+        <div className="flex gap-3 mb-5">
+          <div className="flex-1 p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl text-center">
+            <p className="text-2xl font-black text-emerald-400">{available.length}</p>
+            <p className="text-emerald-500/80 text-[10px] font-bold uppercase tracking-wider">Available</p>
+          </div>
+          <div className="flex-1 p-3 bg-orange-500/10 border border-orange-500/20 rounded-2xl text-center">
+            <p className="text-2xl font-black text-orange-400">{deployed.length}</p>
+            <p className="text-orange-500/80 text-[10px] font-bold uppercase tracking-wider">Deployed</p>
+          </div>
+          <div className="flex-1 p-3 bg-slate-800/50 border border-slate-700/50 rounded-2xl text-center">
+            <p className="text-2xl font-black text-white">{officers.length}</p>
+            <p className="text-slate-500 text-[10px] font-bold uppercase tracking-wider">Total</p>
           </div>
         </div>
 
+        {available.length === 0 && (
+          <div className="mb-4 p-3 bg-amber-500/10 border border-amber-500/20 rounded-2xl flex items-start gap-2">
+            <AlertTriangle size={15} className="text-amber-400 mt-0.5 shrink-0" />
+            <p className="text-amber-300 text-xs">कोई officer available नहीं है। आप deployed officers को भी assign कर सकते हैं, या नीचे Reset बटन से सभी duties clear करें।</p>
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Officer / अधिकारी ({available.length} available)</label>
+            <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">
+              Officer / अधिकारी चुनें
+            </label>
             <select value={form.officerId} onChange={e => setForm({ ...form, officerId: e.target.value })}
               className="w-full px-4 py-3 bg-slate-950/50 border border-slate-700/50 rounded-2xl text-white focus:outline-none focus:border-blue-500 transition-all text-sm appearance-none">
-              {available.length === 0 ? <option value="">No officers available</option> : available.map(o => (
-                <option key={o.id} value={o.id}>{o.rank} {o.name} ({o.badgeNo})</option>
-              ))}
+              {allSorted.length === 0 ? (
+                <option value="">— No officers in system —</option>
+              ) : (
+                <>
+                  {available.length > 0 && <optgroup label="✅ Available Officers">
+                    {available.map(o => <option key={o.id} value={o.id}>{o.rank} {o.name} ({o.badgeNo})</option>)}
+                  </optgroup>}
+                  {deployed.length > 0 && <optgroup label="🔶 Deployed Officers (can reassign)">
+                    {deployed.map(o => <option key={o.id} value={o.id}>{o.rank} {o.name} ({o.badgeNo}) — Deployed</option>)}
+                  </optgroup>}
+                </>
+              )}
             </select>
           </div>
           <div className="grid grid-cols-2 gap-4">
@@ -101,12 +165,21 @@ function AssignModal({ event, officers, onClose, onSave }: {
           </div>
           <div className="flex gap-3 pt-2">
             <button type="button" onClick={onClose} className="flex-1 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-2xl font-bold text-sm">Cancel</button>
-            <motion.button whileTap={{ scale: 0.97 }} type="submit" disabled={saving || available.length === 0}
+            <motion.button whileTap={{ scale: 0.97 }} type="submit" disabled={saving || allSorted.length === 0}
               className="flex-1 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl font-bold text-sm shadow-lg disabled:opacity-50">
               {saving ? 'Assigning...' : '✓ Assign Duty'}
             </motion.button>
           </div>
         </form>
+
+        {/* Reset all duties for event */}
+        <div className="mt-4 pt-4 border-t border-slate-800">
+          <button type="button" onClick={handleResetAll} disabled={resetting}
+            className="w-full py-2.5 flex items-center justify-center gap-2 text-red-400/70 hover:text-red-400 hover:bg-red-500/10 rounded-2xl text-xs font-bold border border-transparent hover:border-red-500/20 transition-all disabled:opacity-50">
+            <RotateCcw size={13} />
+            {resetting ? 'Resetting...' : 'Reset All Duties for This Event'}
+          </button>
+        </div>
       </motion.div>
     </motion.div>
   );
@@ -161,11 +234,14 @@ export default function DutyAssignment() {
     } finally { setAiLoading(false); }
   };
 
+  const refreshOfficers = () => {
+    fetch('http://localhost:3000/api/officers').then(r => r.json()).then(setOfficers);
+  };
+
   const deleteDuty = async (id: string) => {
     await fetch(`http://localhost:3000/api/duties/${id}`, { method: 'DELETE' });
     setDuties(prev => prev.filter(d => d.id !== id));
-    const newOfficers = await fetch('http://localhost:3000/api/officers').then(r => r.json());
-    setOfficers(newOfficers);
+    refreshOfficers();
     showToast('info', 'Duty Removed', 'Officer is now available again.');
   };
 
@@ -341,6 +417,14 @@ export default function DutyAssignment() {
             officers={officers}
             onClose={() => setShowModal(false)}
             onSave={d => setDuties(prev => [d, ...prev])}
+            onOfficersRefresh={() => {
+              refreshOfficers();
+              // Reload duties for current event after reset
+              if (selectedEventId) {
+                fetch(`http://localhost:3000/api/duties?eventId=${selectedEventId}`)
+                  .then(r => r.json()).then(setDuties);
+              }
+            }}
           />
         )}
       </AnimatePresence>
