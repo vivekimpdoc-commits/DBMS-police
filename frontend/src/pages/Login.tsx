@@ -64,7 +64,7 @@ export default function Login() {
         <motion.button
           whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
           onClick={toggleLanguage}
-          className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-slate-300 backdrop-blur-xl transition-all"
+          className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-slate-200 rounded-full text-slate-600 backdrop-blur-xl transition-all"
         >
           <Languages size={15} className="text-blue-400" />
           <span className="text-sm font-bold tracking-wider">{lang === 'en' ? 'हिन्दी' : 'ENGLISH'}</span>
@@ -79,7 +79,7 @@ export default function Login() {
       >
         {/* Glow card */}
         <div className="absolute inset-0 bg-blue-600/20 blur-3xl rounded-[40px] -z-10 scale-95" />
-        <div className="bg-slate-950/80 backdrop-blur-3xl border border-white/8 p-10 rounded-[36px] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)]">
+        <div className="bg-slate-50/80 backdrop-blur-3xl border border-slate-200 p-10 rounded-[36px] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)]">
           
           {/* Logo */}
           <div className="flex flex-col items-center mb-10">
@@ -91,7 +91,7 @@ export default function Login() {
             >
               <div className="w-24 h-24 bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-700 rounded-[28px] flex items-center justify-center shadow-[0_0_50px_rgba(99,102,241,0.4)] border border-white/20 relative overflow-hidden">
                 <div className="absolute inset-0 bg-white/10 rounded-full blur-xl scale-75" />
-                <Shield className="text-white w-12 h-12 relative z-10 drop-shadow-lg" />
+                <Shield className="text-slate-800 w-12 h-12 relative z-10 drop-shadow-lg" />
               </div>
               {/* Pulsing ring */}
               <div className="absolute inset-0 rounded-[28px] border-2 border-blue-400/30 animate-ping" />
@@ -100,7 +100,7 @@ export default function Login() {
             <h1 className="text-[2.5rem] font-black text-transparent bg-clip-text bg-gradient-to-br from-white via-blue-100 to-slate-400 tracking-tight leading-none">
               VDMS
             </h1>
-            <p className="text-slate-400 text-sm font-semibold tracking-[0.25em] uppercase mt-2">
+            <p className="text-slate-500 text-sm font-semibold tracking-[0.25em] uppercase mt-2">
               {lang === 'en' ? 'UP Police Command Center' : 'यूपी पुलिस कमांड सेंटर'}
             </p>
           </div>
@@ -108,18 +108,18 @@ export default function Login() {
           <form onSubmit={handleLogin} className="space-y-5">
             {/* Role selector */}
             <div className="space-y-1.5">
-              <label className="block text-[11px] font-black text-slate-400 tracking-[0.2em] uppercase px-1">
+              <label className="block text-[11px] font-black text-slate-500 tracking-[0.2em] uppercase px-1">
                 {t('selectRole')}
               </label>
               <div className="relative">
                 <button
                   type="button"
                   onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="w-full flex items-center gap-3 px-4 py-3.5 bg-slate-900/60 border border-slate-700/50 hover:border-slate-600 rounded-2xl text-left focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all group"
+                  className="w-full flex items-center gap-3 px-4 py-3.5 bg-white/60 border border-slate-200/50 hover:border-slate-600 rounded-2xl text-left focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all group"
                 >
                   <span className="text-xl">{selectedRole.icon}</span>
                   <div className="flex-1 min-w-0">
-                    <p className="text-white font-bold text-sm">{selectedRole.label}</p>
+                    <p className="text-slate-800 font-bold text-sm">{selectedRole.label}</p>
                     <p className="text-slate-500 text-[11px]">{selectedRole.sub}</p>
                   </div>
                   <ChevronDown size={16} className={`text-slate-500 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
@@ -131,17 +131,17 @@ export default function Login() {
                       initial={{ opacity: 0, y: -8, scale: 0.97 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -8, scale: 0.97 }}
-                      className="absolute top-full left-0 right-0 mt-2 bg-slate-900/95 backdrop-blur-2xl border border-slate-700/50 rounded-2xl overflow-hidden shadow-2xl z-10"
+                      className="absolute top-full left-0 right-0 mt-2 bg-white/95 backdrop-blur-2xl border border-slate-200/50 rounded-2xl overflow-hidden shadow-2xl z-10"
                     >
                       {roles.map(role => (
                         <button
                           key={role.id} type="button"
                           onClick={() => { setSelectedRole(role); setDropdownOpen(false); }}
-                          className={`w-full flex items-center gap-3 px-4 py-3 hover:bg-slate-800/50 transition-colors text-left ${selectedRole.id === role.id ? 'bg-blue-600/10 border-l-2 border-blue-500' : ''}`}
+                          className={`w-full flex items-center gap-3 px-4 py-3 hover:bg-slate-50/50 transition-colors text-left ${selectedRole.id === role.id ? 'bg-blue-600/10 border-l-2 border-blue-500' : ''}`}
                         >
                           <span className="text-xl">{role.icon}</span>
                           <div>
-                            <p className="text-white font-bold text-sm">{role.label}</p>
+                            <p className="text-slate-800 font-bold text-sm">{role.label}</p>
                             <p className="text-slate-500 text-[11px]">{role.sub}</p>
                           </div>
                         </button>
@@ -154,7 +154,7 @@ export default function Login() {
 
             {/* Password */}
             <div className="space-y-1.5">
-              <label className="block text-[11px] font-black text-slate-400 tracking-[0.2em] uppercase px-1">
+              <label className="block text-[11px] font-black text-slate-500 tracking-[0.2em] uppercase px-1">
                 {t('passcode')}
               </label>
               <div className="relative group">
@@ -163,7 +163,7 @@ export default function Login() {
                   type="password"
                   placeholder="••••••••"
                   value={password} onChange={e => setPassword(e.target.value)}
-                  className="w-full pl-11 pr-4 py-3.5 bg-slate-900/60 border border-slate-700/50 hover:border-slate-600 rounded-2xl text-white placeholder-slate-700 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all font-mono tracking-widest text-lg"
+                  className="w-full pl-11 pr-4 py-3.5 bg-white/60 border border-slate-200/50 hover:border-slate-600 rounded-2xl text-slate-800 placeholder-slate-700 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all font-mono tracking-widest text-lg"
                 />
               </div>
             </div>
@@ -172,7 +172,7 @@ export default function Login() {
             <motion.button
               whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
               type="submit" disabled={loading}
-              className="w-full relative py-4 rounded-2xl font-black text-white overflow-hidden mt-2 transition-all disabled:opacity-70"
+              className="w-full relative py-4 rounded-2xl font-black text-slate-800 overflow-hidden mt-2 transition-all disabled:opacity-70"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 bg-[size:200%] animate-[shimmer_3s_linear_infinite]" />
               <span className="relative z-10 flex items-center justify-center gap-2">
