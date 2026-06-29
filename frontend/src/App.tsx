@@ -26,16 +26,16 @@ function StatCard({ title, value, sub, icon: Icon, color, border, bg, loading }:
   { title: string; value: string | number; sub: string; icon: any; color: string; border: string; bg: string; loading?: boolean }) {
   return (
     <motion.div whileHover={{ scale: 1.02, y: -4 }}
-      className={`bg-slate-50/40 backdrop-blur-xl p-6 rounded-3xl border ${border} shadow-xl relative overflow-hidden group`}>
+      className={`glass-card p-6 rounded-3xl border ${border} shadow-xl relative overflow-hidden group`}>
       <div className={`absolute -right-6 -top-6 opacity-10 group-hover:scale-125 transition-transform duration-500 ${color}`}>
         <Icon size={120} />
       </div>
       <div className="relative z-10">
-        <p className="text-slate-500 font-bold mb-2 uppercase tracking-wider text-[10px]">{title}</p>
+        <p className="text-slate-400 font-bold mb-2 uppercase tracking-wider text-[10px]">{title}</p>
         {loading ? (
           <div className="h-10 w-24 bg-slate-700/50 rounded-xl animate-pulse mb-2" />
         ) : (
-          <h3 className="text-4xl font-black text-slate-800 mb-2 tracking-tight">{value}</h3>
+          <h3 className="text-4xl font-black text-white mb-2 tracking-tight">{value}</h3>
         )}
         <span className={`${color} text-[11px] font-bold ${bg} px-3 py-1 rounded-full border border-current/20`}>{sub}</span>
       </div>
@@ -84,8 +84,8 @@ function Dashboard() {
 
       {/* Force Overview */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-5">
-        <div className="bg-slate-50/40 backdrop-blur-xl rounded-3xl border border-slate-200/30 p-5">
-          <h3 className="text-base font-bold text-slate-800 mb-4 flex items-center gap-2"><TrendingUp size={16} className="text-blue-400" /> Force Status</h3>
+        <div className="glass-card rounded-3xl p-5">
+          <h3 className="text-base font-bold text-white mb-4 flex items-center gap-2"><TrendingUp size={16} className="text-blue-400" /> Force Status</h3>
           <div className="space-y-3">
             {[
               { label: 'Deployed', value: stats?.deployedOfficers || 0, total: stats?.totalOfficers || 1, color: 'bg-emerald-500' },
@@ -96,10 +96,10 @@ function Dashboard() {
               return (
                 <div key={i}>
                   <div className="flex justify-between text-xs font-medium mb-1.5">
-                    <span className="text-slate-600">{item.label}</span>
-                    <span className="text-slate-500">{item.value} ({pct}%)</span>
+                    <span className="text-slate-300">{item.label}</span>
+                    <span className="text-slate-400">{item.value} ({pct}%)</span>
                   </div>
-                  <div className="h-2 bg-white rounded-full overflow-hidden">
+                  <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
                     <motion.div initial={{ width: 0 }} animate={{ width: `${pct}%` }}
                       transition={{ delay: i * 0.15, duration: 0.7 }}
                       className={`h-full rounded-full ${item.color}`} />
@@ -111,13 +111,13 @@ function Dashboard() {
         </div>
 
         <motion.div whileHover={{ boxShadow: "0 20px 40px -15px rgba(59,130,246,0.12)" }}
-          className="lg:col-span-2 bg-slate-50/40 backdrop-blur-xl rounded-3xl border border-slate-200/30 p-5">
-          <h3 className="text-base font-bold text-slate-800 mb-4 flex items-center gap-2"><MapPin className="text-blue-400" size={16} /> {t('liveDeployment')}</h3>
-          <Link to="/map" className="flex flex-col items-center justify-center h-[200px] bg-slate-50/50 rounded-2xl border border-dashed border-slate-200/50 hover:border-blue-500/30 hover:bg-blue-500/5 transition-all group">
+          className="lg:col-span-2 glass-card rounded-3xl p-5">
+          <h3 className="text-base font-bold text-white mb-4 flex items-center gap-2"><MapPin className="text-blue-400" size={16} /> {t('liveDeployment')}</h3>
+          <Link to="/map" className="flex flex-col items-center justify-center h-[200px] bg-slate-800/30 rounded-2xl border border-dashed border-slate-700 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all group">
             <div className="w-12 h-12 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center group-hover:scale-110 transition-transform mb-3">
                <MapPin className="text-blue-400" size={22} />
             </div>
-            <p className="text-slate-500 font-medium text-sm">{t('goToMap')}</p>
+            <p className="text-slate-300 font-medium text-sm">{t('goToMap')}</p>
             <p className="text-blue-400 text-xs mt-1 font-bold">Click to Open GIS Map →</p>
           </Link>
         </motion.div>
@@ -125,17 +125,17 @@ function Dashboard() {
 
       {/* Quick Actions */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <h3 className="col-span-full text-sm font-bold text-slate-500 uppercase tracking-widest">Quick Actions</h3>
+        <h3 className="col-span-full text-sm font-bold text-slate-400 uppercase tracking-widest">Quick Actions</h3>
         {[
-          { to: '/vip', label: 'Add VIP Event', icon: Shield, color: 'from-blue-600/20 to-white', border: 'border-blue-500/20', text: 'text-blue-400' },
-          { to: '/duty', label: 'Assign Duties', icon: ClipboardList, color: 'from-purple-600/20 to-white', border: 'border-purple-500/20', text: 'text-purple-400' },
-          { to: '/officers', label: 'View Officers', icon: UserSquare2, color: 'from-emerald-600/20 to-white', border: 'border-emerald-500/20', text: 'text-emerald-400' },
-          { to: '/incidents', label: 'Report Incident', icon: Activity, color: 'from-red-600/20 to-white', border: 'border-red-500/20', text: 'text-red-400' },
+          { to: '/vip', label: 'Add VIP Event', icon: Shield, color: 'from-blue-600/20 to-blue-900/10', border: 'border-blue-500/20', text: 'text-blue-400' },
+          { to: '/duty', label: 'Assign Duties', icon: ClipboardList, color: 'from-purple-600/20 to-purple-900/10', border: 'border-purple-500/20', text: 'text-purple-400' },
+          { to: '/officers', label: 'View Officers', icon: UserSquare2, color: 'from-emerald-600/20 to-emerald-900/10', border: 'border-emerald-500/20', text: 'text-emerald-400' },
+          { to: '/incidents', label: 'Report Incident', icon: Activity, color: 'from-red-600/20 to-red-900/10', border: 'border-red-500/20', text: 'text-red-400' },
         ].map((qa, i) => (
           <Link to={qa.to} key={i}>
             <motion.div whileHover={{ y: -3, scale: 1.02 }}
-              className={`p-4 rounded-2xl border bg-gradient-to-br ${qa.color} ${qa.border} flex items-center gap-3 cursor-pointer transition-all`}>
-              <div className={`w-9 h-9 rounded-xl ${qa.color} border ${qa.border} flex items-center justify-center ${qa.text}`}>
+              className={`p-4 rounded-2xl border bg-gradient-to-br ${qa.color} ${qa.border} flex items-center gap-3 cursor-pointer transition-all glass-card hover:border-white/20`}>
+              <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${qa.color} border ${qa.border} flex items-center justify-center ${qa.text}`}>
                 <qa.icon size={18} />
               </div>
               <span className={`font-bold text-sm ${qa.text}`}>{qa.label}</span>
@@ -153,9 +153,9 @@ function NavLink({ to, icon: Icon, label }: { to: string; icon: any; label: stri
   return (
     <Link to={to}
       className={`flex items-center gap-3 px-4 py-2.5 rounded-2xl font-medium transition-all relative text-sm ${
-        isActive ? 'text-slate-800 bg-blue-600/10 border border-blue-500/20' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50/50 border border-transparent'
+        isActive ? 'text-white bg-blue-500/20 border border-blue-500/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50 border border-transparent'
       }`}>
-      {isActive && <motion.div layoutId="activeNav" className="absolute inset-0 bg-blue-500/5 rounded-2xl" />}
+      {isActive && <motion.div layoutId="activeNav" className="absolute inset-0 bg-blue-500/10 rounded-2xl" />}
       <Icon size={16} className={`relative z-10 ${isActive ? 'text-blue-400' : 'group-hover:text-blue-400'}`} />
       <span className="relative z-10 leading-none">{label}</span>
     </Link>
@@ -165,14 +165,14 @@ function NavLink({ to, icon: Icon, label }: { to: string; icon: any; label: stri
 function Sidebar() {
   const { t, lang, toggleLanguage } = useLanguage();
   return (
-    <div className="w-[260px] bg-slate-50/90 backdrop-blur-2xl border-r border-slate-200/50 h-screen sticky top-0 flex-col hidden md:flex z-50 shrink-0">
+    <div className="w-[260px] bg-[#020817]/80 backdrop-blur-2xl border-r border-white/5 h-screen sticky top-0 flex-col hidden md:flex z-50 shrink-0">
       <div className="p-5 flex items-center gap-3">
-        <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-700 rounded-xl flex items-center justify-center shadow-lg shadow-blue-900/40 border border-slate-200">
-          <Shield className="text-slate-800 w-5 h-5" />
+        <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-700 rounded-xl flex items-center justify-center shadow-lg shadow-blue-900/40 border border-slate-700">
+          <Shield className="text-white w-5 h-5" />
         </div>
         <div>
           <h1 className="text-lg font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">VDMS</h1>
-          <p className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">UP Police Control</p>
+          <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest">UP Police Control</p>
         </div>
       </div>
 
@@ -181,27 +181,27 @@ function Sidebar() {
         <NavLink to="/vip" icon={Shield} label={t('vipEvents')} />
 
         <div className="pt-3 pb-1 px-4">
-          <p className="text-[9px] font-black text-slate-600 uppercase tracking-[0.2em]">Duty Management</p>
+          <p className="text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">Duty Management</p>
         </div>
         <NavLink to="/officers" icon={UserSquare2} label="Officers Registry" />
         <NavLink to="/duty" icon={ClipboardList} label="Duty Assignment" />
         <NavLink to="/deployment" icon={Users} label={t('forceDeployment')} />
 
         <div className="pt-3 pb-1 px-4">
-          <p className="text-[9px] font-black text-slate-600 uppercase tracking-[0.2em]">Operations</p>
+          <p className="text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">Operations</p>
         </div>
         <NavLink to="/map" icon={MapPin} label={t('gisMap')} />
         <NavLink to="/incidents" icon={Activity} label={t('incidents')} />
         <NavLink to="/security" icon={ShieldCheck} label={t('security')} />
 
         <div className="pt-3 pb-1 px-4">
-          <p className="text-[9px] font-black text-slate-600 uppercase tracking-[0.2em]">{t('analyticsHeading')}</p>
+          <p className="text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">{t('analyticsHeading')}</p>
         </div>
         <NavLink to="/reports" icon={BarChart2} label={t('reports')} />
         <NavLink to="/ai" icon={Brain} label={t('aiFeed')} />
 
         <div className="pt-3 pb-1 px-4">
-          <p className="text-[9px] font-black text-slate-600 uppercase tracking-[0.2em]">Field</p>
+          <p className="text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">Field</p>
         </div>
         <Link to="/mobile" target="_blank"
           className="flex items-center gap-3 px-4 py-2.5 text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/5 rounded-2xl font-medium border border-emerald-500/15 bg-emerald-500/5 text-sm transition-all">
@@ -209,25 +209,25 @@ function Sidebar() {
         </Link>
       </nav>
 
-      <div className="p-3 shrink-0 space-y-2 border-t border-slate-200/50">
+      <div className="p-3 shrink-0 space-y-2 border-t border-white/5">
         <button onClick={toggleLanguage}
-          className="w-full flex items-center justify-between px-4 py-2.5 bg-white/50 hover:bg-slate-50 rounded-xl border border-slate-200 transition-colors">
+          className="w-full flex items-center justify-between px-4 py-2.5 bg-slate-800/50 hover:bg-slate-700/50 rounded-xl border border-white/10 transition-colors">
           <div className="flex items-center gap-2">
             <Languages size={14} className="text-blue-400" />
-            <span className="text-sm font-medium text-slate-600">Language</span>
+            <span className="text-sm font-medium text-slate-300">Language</span>
           </div>
-          <span className="text-[11px] font-black px-2 py-0.5 bg-slate-50 rounded-lg text-slate-800 uppercase">{lang === 'en' ? 'EN' : 'HI'}</span>
+          <span className="text-[11px] font-black px-2 py-0.5 bg-slate-900 rounded-lg text-white uppercase">{lang === 'en' ? 'EN' : 'HI'}</span>
         </button>
 
-        <div className="bg-white/60 rounded-2xl p-3 border border-slate-200">
+        <div className="bg-slate-800/40 rounded-2xl p-3 border border-white/10">
           <div className="flex items-center gap-2.5 mb-2.5">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-black text-slate-800 text-[11px]">DGP</div>
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-black text-white text-[11px]">DGP</div>
             <div>
-              <p className="text-sm font-bold text-slate-800">Prashant K.</p>
-              <p className="text-[10px] text-slate-500 uppercase tracking-wider">{t('stateControl')}</p>
+              <p className="text-sm font-bold text-white">Prashant K.</p>
+              <p className="text-[10px] text-slate-400 uppercase tracking-wider">{t('stateControl')}</p>
             </div>
           </div>
-          <Link to="/login" className="w-full py-1.5 bg-slate-50 hover:bg-red-500/10 text-slate-500 hover:text-red-400 rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-2 border border-transparent hover:border-red-500/20">
+          <Link to="/login" className="w-full py-1.5 bg-slate-900/50 hover:bg-red-500/10 text-slate-400 hover:text-red-400 rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-2 border border-transparent hover:border-red-500/20">
             <LogOut size={12}/> {t('logout')}
           </Link>
         </div>
@@ -239,23 +239,23 @@ function Sidebar() {
 function Header() {
   const { t } = useLanguage();
   return (
-    <header className="h-14 border-b border-slate-200/50 bg-slate-50/70 backdrop-blur-2xl sticky top-0 z-40 flex items-center justify-between px-6 shrink-0">
+    <header className="h-14 border-b border-white/5 bg-[#020817]/80 backdrop-blur-2xl sticky top-0 z-40 flex items-center justify-between px-6 shrink-0">
       <div className="flex items-center gap-4">
-        <button className="md:hidden text-slate-500 hover:text-slate-800"><Menu size={20} /></button>
+        <button className="md:hidden text-slate-400 hover:text-white"><Menu size={20} /></button>
         <div className="relative hidden md:block">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-600 w-3.5 h-3.5" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 w-3.5 h-3.5" />
           <input type="text" placeholder={t('searchPlaceholder')}
-            className="pl-9 pr-4 py-1.5 bg-white/50 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-700 focus:outline-none focus:border-blue-500/40 w-[300px] transition-all" />
+            className="pl-9 pr-4 py-1.5 bg-slate-800/50 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/40 w-[300px] transition-all" />
         </div>
       </div>
       <div className="flex items-center gap-3">
-        <button className="relative p-1.5 text-slate-500 hover:text-slate-800 transition-colors hover:bg-slate-50/50 rounded-lg">
+        <button className="relative p-1.5 text-slate-400 hover:text-white transition-colors hover:bg-slate-800/50 rounded-lg">
           <Bell size={16} />
           <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-red-500 rounded-full" />
         </button>
-        <div className="h-5 w-px bg-slate-50" />
+        <div className="h-5 w-px bg-slate-700" />
         <div className="text-right hidden sm:block">
-          <p className="text-xs font-bold text-slate-800">{t('commandCenter')}</p>
+          <p className="text-xs font-bold text-white">{t('commandCenter')}</p>
           <p className="text-[10px] font-bold text-emerald-400 flex items-center justify-end gap-1">
             <span className="relative flex w-1.5 h-1.5">
               <span className="absolute inline-flex w-full h-full rounded-full opacity-75 bg-emerald-400 animate-ping" />
