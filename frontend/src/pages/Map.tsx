@@ -36,23 +36,23 @@ export default function GISMap() {
     <div className="p-6 h-[calc(100vh-80px)] flex flex-col">
       <div className="flex justify-between items-center mb-6 shrink-0">
         <div>
-          <h2 className="text-3xl font-bold text-slate-800 tracking-tight flex items-center gap-2">
+          <h2 className="text-3xl font-bold text-white tracking-tight flex items-center gap-2">
             <Crosshair className="text-accent" size={28}/> GIS Command Map
           </h2>
-          <p className="text-slate-500 text-sm mt-1">Live tracking of forces, routes, and security zones.</p>
+          <p className="text-slate-400 text-sm mt-1">Live tracking of forces, routes, and security zones.</p>
         </div>
         <div className="flex gap-3">
-           <button className="bg-slate-50 hover:bg-slate-700 text-slate-800 px-4 py-2 rounded-lg font-medium flex items-center gap-2 border border-slate-200 transition-colors">
+           <button className="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-lg font-medium flex items-center gap-2 border border-slate-700 transition-colors">
             <Layers size={18} /> Map Layers
           </button>
         </div>
       </div>
 
-      <div className="flex-1 bg-slate-50/50 backdrop-blur-md border border-slate-200 rounded-2xl overflow-hidden shadow-xl relative">
+      <div className="flex-1 glass-card rounded-2xl overflow-hidden relative">
         {/* Map Overlays / Legend */}
-        <div className="absolute top-4 right-4 z-[400] bg-white/90 border border-slate-200 p-4 rounded-xl shadow-2xl backdrop-blur-md">
-          <h4 className="text-slate-800 font-bold mb-3 text-sm border-b border-slate-200 pb-2">Map Legend</h4>
-          <div className="space-y-2 text-xs text-slate-600">
+        <div className="absolute top-4 right-4 z-[400] bg-slate-900/90 border border-slate-700 p-4 rounded-xl shadow-2xl backdrop-blur-md">
+          <h4 className="text-white font-bold mb-3 text-sm border-b border-slate-700 pb-2">Map Legend</h4>
+          <div className="space-y-2 text-xs text-slate-300">
             <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-blue-500 border border-blue-300"></div> VIP Route</div>
             <div className="flex items-center gap-2"><div className="w-3 h-3 bg-red-500/20 border-2 border-red-500"></div> High Security Zone</div>
             <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-emerald-500"></div> Checkpost</div>

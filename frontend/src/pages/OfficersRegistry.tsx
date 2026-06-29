@@ -64,14 +64,14 @@ function AddOfficerModal({ onClose, onSave }: { onClose: () => void; onSave: (o:
       onClick={onClose}>
       <motion.div initial={{ scale: 0.9, y: 24 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 24 }}
         onClick={e => e.stopPropagation()}
-        className="bg-white/95 backdrop-blur-2xl border border-slate-200 rounded-3xl p-8 w-full max-w-lg shadow-2xl">
+        className="glass-card rounded-3xl p-8 w-full max-w-lg shadow-2xl">
         <div className="flex items-center gap-3 mb-6">
           <div className="w-10 h-10 rounded-2xl bg-emerald-600/20 border border-emerald-500/30 flex items-center justify-center">
             <UserPlus className="text-emerald-400" size={20} />
           </div>
           <div>
-            <h3 className="text-xl font-black text-slate-800">नया अधिकारी जोड़ें</h3>
-            <p className="text-slate-500 text-xs">Add New Officer to Registry</p>
+            <h3 className="text-xl font-black text-white">नया अधिकारी जोड़ें</h3>
+            <p className="text-slate-400 text-xs">Add New Officer to Registry</p>
           </div>
         </div>
 
@@ -83,10 +83,10 @@ function AddOfficerModal({ onClose, onSave }: { onClose: () => void; onSave: (o:
             { label: 'Phone', key: 'phone', placeholder: '9876543210', col: 1 },
           ].map(f => (
             <div key={f.key} className={f.col === 2 ? 'col-span-2' : ''}>
-              <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">{f.label}</label>
+              <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">{f.label}</label>
               <input type="text" required placeholder={f.placeholder}
                 value={(form as any)[f.key]} onChange={e => setForm({ ...form, [f.key]: e.target.value })}
-                className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/50 rounded-2xl text-slate-800 placeholder-slate-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20 transition-all text-sm"
+                className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-2xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20 transition-all text-sm"
               />
             </div>
           ))}
@@ -97,18 +97,18 @@ function AddOfficerModal({ onClose, onSave }: { onClose: () => void; onSave: (o:
             { label: 'Speciality', key: 'speciality', options: SPECIALITIES },
           ].map(f => (
             <div key={f.key}>
-              <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">{f.label}</label>
+              <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">{f.label}</label>
               <select value={(form as any)[f.key]} onChange={e => setForm({ ...form, [f.key]: e.target.value })}
-                className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/50 rounded-2xl text-slate-800 focus:outline-none focus:border-blue-500 transition-all text-sm appearance-none">
-                {f.options.map(o => <option key={o} value={o} className="bg-white text-slate-800">{o}</option>)}
+                className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-2xl text-white focus:outline-none focus:border-blue-500 transition-all text-sm appearance-none">
+                {f.options.map(o => <option key={o} value={o} className="bg-slate-800 text-white">{o}</option>)}
               </select>
             </div>
           ))}
 
           <div className="col-span-2 flex gap-3 pt-2">
-            <button type="button" onClick={onClose} className="flex-1 py-3 bg-slate-50 hover:bg-slate-700 text-slate-600 rounded-2xl font-bold text-sm transition-colors">Cancel</button>
+            <button type="button" onClick={onClose} className="flex-1 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-2xl font-bold text-sm transition-colors">Cancel</button>
             <motion.button whileTap={{ scale: 0.97 }} type="submit" disabled={saving}
-              className="flex-1 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-slate-800 rounded-2xl font-bold text-sm transition-all shadow-lg shadow-emerald-900/40 disabled:opacity-60">
+              className="flex-1 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-2xl font-bold text-sm transition-all shadow-lg shadow-emerald-900/40 disabled:opacity-60">
               {saving ? 'Saving...' : '+ Register Officer'}
             </motion.button>
           </div>
@@ -148,10 +148,10 @@ export default function OfficersRegistry() {
   };
 
   const stats = [
-    { label: 'Total Officers', value: officers.length, color: 'text-slate-800', border: 'border-slate-200/50', bg: 'from-slate-50/60 to-white/60' },
-    { label: 'Available', value: officers.filter(o => o.availability === 'Available').length, color: 'text-emerald-400', border: 'border-emerald-500/20', bg: 'from-emerald-900/20 to-white/60' },
-    { label: 'Deployed', value: officers.filter(o => o.availability === 'Deployed').length, color: 'text-orange-400', border: 'border-orange-500/20', bg: 'from-orange-900/20 to-white/60' },
-    { label: 'On Leave', value: officers.filter(o => o.availability === 'On Leave').length, color: 'text-red-400', border: 'border-red-500/20', bg: 'from-red-900/20 to-white/60' },
+    { label: 'Total Officers', value: officers.length, color: 'text-white', border: 'border-white/10', bg: 'glass-card' },
+    { label: 'Available', value: officers.filter(o => o.availability === 'Available').length, color: 'text-emerald-400', border: 'border-emerald-500/20', bg: 'glass-card' },
+    { label: 'Deployed', value: officers.filter(o => o.availability === 'Deployed').length, color: 'text-orange-400', border: 'border-orange-500/20', bg: 'glass-card' },
+    { label: 'On Leave', value: officers.filter(o => o.availability === 'On Leave').length, color: 'text-red-400', border: 'border-red-500/20', bg: 'glass-card' },
   ];
 
   return (
@@ -162,11 +162,11 @@ export default function OfficersRegistry() {
       <div className="flex justify-between items-start">
         <div>
           <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">Officers Registry</h2>
-          <p className="text-slate-500 text-sm mt-1">अधिकारियों का पूरा डेटाबेस, उपलब्धता और विशेषज्ञता।</p>
+          <p className="text-slate-400 text-sm mt-1">अधिकारियों का पूरा डेटाबेस, उपलब्धता और विशेषज्ञता।</p>
         </div>
         <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
           onClick={() => setShowModal(true)}
-          className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-slate-800 px-5 py-2.5 rounded-2xl font-bold flex items-center gap-2 shadow-lg shadow-emerald-900/40">
+          className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white px-5 py-2.5 rounded-2xl font-bold flex items-center gap-2 shadow-lg shadow-emerald-900/40">
           <UserPlus size={18} /> नया अधिकारी जोड़ें
         </motion.button>
       </div>
@@ -175,33 +175,33 @@ export default function OfficersRegistry() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((s, i) => (
           <motion.div key={i} whileHover={{ y: -3 }}
-            className={`p-4 rounded-2xl border bg-gradient-to-br ${s.bg} ${s.border} backdrop-blur-md`}>
-            <p className="text-slate-500 text-xs font-bold uppercase tracking-wider mb-1">{s.label}</p>
+            className={`p-4 rounded-2xl border ${s.bg} ${s.border} hover:border-white/20 transition-all`}>
+            <p className="text-slate-400 text-xs font-bold uppercase tracking-wider mb-1">{s.label}</p>
             <p className={`text-3xl font-black ${s.color}`}>{loading ? '—' : s.value}</p>
           </motion.div>
         ))}
       </div>
 
       {/* Filters + Table */}
-      <div className="bg-white/60 backdrop-blur-xl border border-slate-200 rounded-3xl overflow-hidden flex-1 flex flex-col">
-        <div className="p-4 border-b border-slate-200/50 flex flex-wrap gap-3">
+      <div className="glass-card rounded-3xl overflow-hidden flex-1 flex flex-col">
+        <div className="p-4 border-b border-white/5 flex flex-wrap gap-3">
           <div className="relative flex-1 min-w-[200px]">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 w-4 h-4" />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
             <input type="text" value={search} onChange={e => setSearch(e.target.value)}
               placeholder="Search by name, badge, unit..."
-              className="w-full pl-10 pr-4 py-2.5 bg-slate-50/50 border border-slate-200/40 rounded-2xl text-sm text-slate-800 placeholder-slate-600 focus:outline-none focus:border-blue-500 transition-all" />
+              className="w-full pl-10 pr-4 py-2.5 bg-slate-800/50 border border-slate-700 rounded-2xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-all" />
           </div>
           <div className="flex gap-2 flex-wrap">
             {['All', 'Available', 'Deployed', 'On Leave'].map(a => (
               <button key={a} onClick={() => setFilterAvail(a)}
-                className={`px-3 py-2 rounded-xl text-xs font-bold border transition-all ${filterAvail === a ? 'bg-blue-600 text-white border-blue-500' : 'bg-slate-50/50 text-slate-500 border-slate-200/50 hover:border-slate-600'}`}>
+                className={`px-3 py-2 rounded-xl text-xs font-bold border transition-all ${filterAvail === a ? 'bg-blue-600 text-white border-blue-500' : 'bg-slate-800/50 text-slate-400 border-slate-700 hover:border-slate-500'}`}>
                 {a}
               </button>
             ))}
             <select value={filterRank} onChange={e => setFilterRank(e.target.value)}
-              className="px-3 py-2 bg-slate-50/50 text-slate-500 border border-slate-200/50 rounded-xl text-xs font-bold focus:outline-none hover:border-slate-600 transition-all appearance-none">
-              <option value="All" className="bg-white text-slate-800">All Ranks</option>
-              {RANKS.map(r => <option key={r} value={r} className="bg-white text-slate-800">{r}</option>)}
+              className="px-3 py-2 bg-slate-800/50 text-slate-400 border border-slate-700 rounded-xl text-xs font-bold focus:outline-none hover:border-slate-500 transition-all appearance-none">
+              <option value="All" className="bg-slate-800 text-white">All Ranks</option>
+              {RANKS.map(r => <option key={r} value={r} className="bg-slate-800 text-white">{r}</option>)}
             </select>
           </div>
         </div>
@@ -209,7 +209,7 @@ export default function OfficersRegistry() {
         <div className="overflow-x-auto flex-1">
           <table className="w-full text-left">
             <thead>
-              <tr className="bg-slate-50/60 border-b border-slate-200/50 text-slate-500 text-[11px] uppercase tracking-widest">
+              <tr className="bg-slate-900/40 border-b border-white/5 text-slate-400 text-[11px] uppercase tracking-widest">
                 <th className="p-4">Badge No.</th>
                 <th className="p-4">Officer Name</th>
                 <th className="p-4">Rank / पद</th>
@@ -220,12 +220,12 @@ export default function OfficersRegistry() {
                 <th className="p-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="text-sm divide-y divide-slate-700/30">
+            <tbody className="text-sm divide-y divide-white/5">
               {loading ? (
                 [...Array(5)].map((_, i) => (
-                  <tr key={i} className="border-b border-slate-200/30">
+                  <tr key={i} className="border-b border-white/5">
                     {[...Array(8)].map((_, j) => (
-                      <td key={j} className="p-4"><div className="h-4 bg-slate-700/50 rounded-full animate-pulse" /></td>
+                      <td key={j} className="p-4"><div className="h-4 bg-slate-800/50 rounded-full animate-pulse" /></td>
                     ))}
                   </tr>
                 ))
@@ -235,27 +235,27 @@ export default function OfficersRegistry() {
                 <motion.tr key={officer.id}
                   initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.03 }}
-                  className="hover:bg-slate-50/30 transition-colors group cursor-pointer">
+                  className="hover:bg-slate-800/40 transition-colors group cursor-pointer">
                   <td className="p-4 font-mono text-blue-400 text-[12px] font-bold">{officer.badgeNo}</td>
                   <td className="p-4">
                     <div className="flex items-center gap-2.5">
-                      <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-slate-700 to-slate-50 flex items-center justify-center text-xs font-bold text-slate-600 border border-slate-600/50">
+                      <div className="w-8 h-8 rounded-xl bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-300 border border-slate-700">
                         {officer.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
                       </div>
-                      <p className="text-slate-800 font-bold">{officer.name}</p>
+                      <p className="text-white font-bold">{officer.name}</p>
                     </div>
                   </td>
                   <td className="p-4">
-                    <span className={`px-2.5 py-1 rounded-xl text-[11px] font-bold border ${rankColors[officer.rank] || 'bg-slate-700 text-slate-600 border-slate-600'}`}>
+                    <span className={`px-2.5 py-1 rounded-xl text-[11px] font-bold border ${rankColors[officer.rank] || 'bg-slate-800 text-slate-400 border-slate-700'}`}>
                       {officer.rank}
                     </span>
                   </td>
-                  <td className="p-4 text-slate-600 text-sm">{officer.unit}</td>
-                  <td className="p-4 text-slate-500 text-sm hidden lg:table-cell">
+                  <td className="p-4 text-slate-300 text-sm">{officer.unit}</td>
+                  <td className="p-4 text-slate-400 text-sm hidden lg:table-cell">
                     <span className="flex items-center gap-1"><MapPin size={12} />{officer.district}</span>
                   </td>
                   <td className="p-4 hidden lg:table-cell">
-                    <span className="text-slate-500 bg-slate-50 px-2 py-0.5 rounded-lg text-xs border border-slate-200/50">{officer.speciality}</span>
+                    <span className="text-slate-400 bg-slate-800 px-2 py-0.5 rounded-lg text-xs border border-slate-700">{officer.speciality}</span>
                   </td>
                   <td className="p-4">
                     <span className={`px-2.5 py-1 rounded-xl text-[11px] font-bold border flex items-center gap-1 w-fit ${availColors[officer.availability]}`}>
@@ -276,8 +276,8 @@ export default function OfficersRegistry() {
             </tbody>
           </table>
         </div>
-        <div className="p-4 border-t border-slate-200/50 text-xs text-slate-500 font-medium">
-          Showing <span className="text-slate-600 font-bold">{filtered.length}</span> of <span className="text-slate-600 font-bold">{officers.length}</span> officers
+        <div className="p-4 border-t border-white/5 text-xs text-slate-400 font-medium">
+          Showing <span className="text-white font-bold">{filtered.length}</span> of <span className="text-white font-bold">{officers.length}</span> officers
         </div>
       </div>
 
